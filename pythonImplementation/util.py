@@ -1,4 +1,4 @@
-import data_model
+from data_model import PuzzleState, PuzzleSolution
 import logging
 import copy
 
@@ -28,7 +28,7 @@ def get_empty_position(puzzle):
 
 def permute_puzzle(puzzle, empty_tile_pos, swap_tile_pos):
     puzzle_copy = copy.deepcopy(puzzle)
-    new = data_model.PuzzleState(0,0,0,0,puzzle_copy,0)
+    new = PuzzleState(0,0,0,0,puzzle_copy,0)
     new.currentState[empty_tile_pos[0]][empty_tile_pos[1]] = new.currentState[swap_tile_pos[0]][swap_tile_pos[1]]
     new.currentState[swap_tile_pos[0]][swap_tile_pos[1]] = 0
     return new
@@ -36,7 +36,7 @@ def permute_puzzle(puzzle, empty_tile_pos, swap_tile_pos):
 
 def generate_puzzle_solution(size):
     puzzle = [[0 for _ in range(size)] for _ in range(size)]
-    solution = data_model.PuzzleSolution(puzzle, {})
+    solution = PuzzleSolution(puzzle, {})
 
     for ((x,y), num) in zip(generate_snail_positions(size), range(1, size * size + 1)):
         # last turn number must be zero (empty tile)
