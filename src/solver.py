@@ -1,6 +1,6 @@
 import heapq
 import random
-from data_model import PuzzleState
+from data_model import PuzzleState, generate_puzzle_solution
 from heuristic import *
 from solvable import is_solvable
 import util
@@ -11,7 +11,7 @@ class Astar:
         self.initial_puzzle = initial_puzzle
         self.open_list = []
         self.closed_list = {}
-        self.solution = util.generate_puzzle_solution(self.initial_puzzle.size)
+        self.solution = generate_puzzle_solution(self.initial_puzzle.size)
         # keep some stats :
         self.expanded_node_number = 0
         self.current_node_number = 0
