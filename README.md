@@ -49,3 +49,8 @@ We generate all the possible **moves** from an initial position and then use a *
 - **`manhattan`** : 
 - **`hamming`** : 
 - **`linear conflict`** : 
+
+
+# Interesting resources
+
+This [Blog](https://www.redblobgames.com/pathfinding/a-star/introduction.html) is just amazing to understand algorithms, heuristics by visualizing them.

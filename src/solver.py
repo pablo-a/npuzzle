@@ -1,10 +1,13 @@
 import heapq
-import random
-from data_model import PuzzleState, generate_puzzle_solution
-from heuristic import *
+import heuristic
+from data_model import generate_puzzle_solution
 from solvable import is_solvable
-import util
 
+HEURISTIC_MAP = {
+    "manhattan": heuristic.manhattan_heuristic,
+    "hamming": heuristic.hamming_heuristic,
+    "linear_conflict": heuristic.linear_conflict
+}
 
 class Astar:
     def __init__(self, initial_puzzle):
@@ -20,10 +23,10 @@ class Astar:
     def solve(self):
         success = 0
 
-        self.queue_push(self.initial_puzzle)
+        self.add_to_open_list(self.initial_puzzle)
         while len(self.open_list) != 0 and not success:
             # Pop most valuable state.
-            current_state = self.queue_pop()
+            current_state = self.get_best_item_from_open_list()
 
             # check if final state
             if current_state.is_final_state(self.solution.state):
@@ -43,7 +46,7 @@ class Astar:
                     new_state.compute_cost(
                         self.solution, self.heuristic, self.search_type
                     )
-                    self.queue_push(new_state)
+                    self.add_to_open_list(new_state)
 
         if success:
             current_state.display_solution(self)
@@ -51,11 +54,11 @@ class Astar:
     def is_solvable(self):
         return is_solvable(self.initial_puzzle, self.solution)
 
-    def queue_push(self, value):
+    def add_to_open_list(self, value):
         self.analytics_push()
         heapq.heappush(self.open_list, value)
 
-    def queue_pop(self):
+    def get_best_item_from_open_list(self):
         self.analytics_pop()
         return heapq.heappop(self.open_list)
 
@@ -71,12 +74,7 @@ class Astar:
         self.current_node_number -= 1
 
     def set_heuristic(self, choice):
-        if choice == "manhattan":
-            self.heuristic = manhattan_heuristic
-        elif choice == "hamming":
-            self.heuristic = hamming_heuristic
-        elif choice == "linear_conflict":
-            self.heuristic = linear_conflict
+        self.heuristic = HEURISTIC_MAP.get(choice, heuristic.manhattan_heuristic)
 
     def set_search_type(self, search_type):
         self.search_type = search_type

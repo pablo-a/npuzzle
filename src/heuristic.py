@@ -2,6 +2,7 @@ import logging
 
 
 def manhattan_heuristic(puzzle, solution):
+    "Sum of distances of each tile to its final placement"
     cost = 0
     for row in range(puzzle.size):
         for column in range(puzzle.size):
