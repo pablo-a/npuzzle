@@ -1,5 +1,7 @@
 # N-Puzzle
 
+[![CI status](https://github.com/pablo-a/npuzzle/actions/workflows/python-app.yml/badge.svg)](https://github.com/pablo-a/npuzzle/actions/workflows/python-app.yml)
+
 ## What is this project ?
 
 This project written in Python aims to solve N-puzzle games using the A\* search algorithm or one of its variants.
