@@ -6,7 +6,6 @@ import cProfile
 
 
 def main():
-    args = parse_args()
 
     if args.loglevel != "NONE":
         logging.basicConfig(level=args.loglevel)
@@ -52,11 +51,21 @@ def parse_args():
         help="Choose an heuristic to solve puzzle.",
     )
 
+    parser.add_argument(
+            "-P",
+            "--profiling",
+            action='store_true',
+            help="Activate Profiling",
+        )
+
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
+    args = parse_args()
     # if we want some profiling
-    # cProfile.run('main()')
-    main()
+    if args.profiling:
+        cProfile.run('main()')
+    else:
+        main()

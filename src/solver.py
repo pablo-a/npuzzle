@@ -6,8 +6,9 @@ from solvable import is_solvable
 HEURISTIC_MAP = {
     "manhattan": heuristic.manhattan_heuristic,
     "hamming": heuristic.hamming_heuristic,
-    "linear_conflict": heuristic.linear_conflict
+    "linear_conflict": heuristic.linear_conflict,
 }
+
 
 class Astar:
     def __init__(self, initial_puzzle):

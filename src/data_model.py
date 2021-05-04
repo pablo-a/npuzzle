@@ -2,11 +2,8 @@ import logging
 import copy
 from dataclasses import dataclass
 from typing import List, Any, Dict
-from util import (
-    generate_snail_positions,
-    flatten_nested_list,
-    colors
-)
+from util import generate_snail_positions, flatten_nested_list, colors
+
 
 @dataclass
 class PuzzleSolution:
@@ -105,6 +102,7 @@ class PuzzleState:
             else:
                 print(f"{elem[-1]:{width}}]")
         print("")
+
 
 def generate_permutations(puzzle):
     for (empty_tile_pos, swap_tile_pos) in get_allowed_permutations(

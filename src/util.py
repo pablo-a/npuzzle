@@ -1,7 +1,3 @@
-import logging
-import copy
-
-
 def generate_snail_positions(array_size):
     x = 0
     y = 0

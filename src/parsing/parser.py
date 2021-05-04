@@ -1,8 +1,7 @@
 import sys
 import re
 import logging
-from data_model import PuzzleState, ParsingError
-from util import flatten_nested_list
+from data_model import PuzzleState
 from parsing.integrity import check_puzzle_integrity
 
 
@@ -29,7 +28,7 @@ def line_is_puzzle_size(line):
 
 def line_is_puzzle_content(line, puzzle_size):
     trimmed_line = line.strip()
-    if re.match(f"(\d+\s+){ {puzzle_size-1} }(\d+\s*)(#.*)?$", trimmed_line):
+    if re.match(fr"(\d+\s+){ {puzzle_size-1} }(\d+\s*)(#.*)?$", trimmed_line):
         return True
     logging.warning(f"line should contain {puzzle_size} numbers")
     return False

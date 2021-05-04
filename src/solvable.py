@@ -20,7 +20,7 @@ def compute_inversions(puzzle):
     for tile in range(len(flat_puzzle)):
         if flat_puzzle[tile] == 0:
             continue
-        for to_compare in flat_puzzle[tile + 1 :]:
+        for to_compare in flat_puzzle[tile + 1:]:
             if to_compare == 0:
                 continue
             if flat_puzzle[tile] > to_compare:
