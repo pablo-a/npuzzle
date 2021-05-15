@@ -24,7 +24,7 @@ We just need to generate a puzzle and pass it to our solver :
   - `-i` : How many iterations needed to shuffle puzle
   - `<size>` : Puzzle size
 
-- Solver Usage : `python src/main.py [-h] [-l {NONE,DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-s {A*,uniform,greedy}] [-H {manhattan,hamming,linear_conflict}]`
+- Solver Usage : `python src/main.py [-h] [-l {NONE,DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-s {A*,uniform,greedy}] [-H {manhattan,hamming,euclidean}]`
   - `-h` : Help
   - `-l` : Log Level (default to `ERROR`)
   - `-s` : Solver **strategy** to use (default to `A*`)
@@ -49,9 +49,9 @@ We generate all the possible **moves** from an initial position and then use a *
 
 ### Heuristics
 
-- **`manhattan`** :
-- **`hamming`** :
-- **`linear conflict`** :
+- **`manhattan`**
+- **`hamming`**
+- **`euclidean`**
 
 # Interesting resources
 
