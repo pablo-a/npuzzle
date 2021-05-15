@@ -47,16 +47,16 @@ def parse_args():
         "--heuristic",
         type=str,
         default="hamming",
-        choices=["manhattan", "hamming", "linear_conflict"],
+        choices=["manhattan", "hamming", "euclidean"],
         help="Choose an heuristic to solve puzzle.",
     )
 
     parser.add_argument(
-            "-P",
-            "--profiling",
-            action='store_true',
-            help="Activate Profiling",
-        )
+        "-P",
+        "--profiling",
+        action="store_true",
+        help="Activate Profiling",
+    )
 
     args = parser.parse_args()
     return args
@@ -66,6 +66,6 @@ if __name__ == "__main__":
     args = parse_args()
     # if we want some profiling
     if args.profiling:
-        cProfile.run('main()')
+        cProfile.run("main()")
     else:
         main()

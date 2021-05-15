@@ -6,7 +6,7 @@ from solvable import is_solvable
 HEURISTIC_MAP = {
     "manhattan": heuristic.manhattan_heuristic,
     "hamming": heuristic.hamming_heuristic,
-    "linear_conflict": heuristic.linear_conflict,
+    "euclidean": heuristic.euclidean_heuristic,
 }
 
 
