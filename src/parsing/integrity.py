@@ -26,7 +26,7 @@ def check_correct_numbers(puzzle_size: int, puzzle_list: list) -> None:
 
 def check_puzzle_integrity(puzzle: PuzzleState) -> None:
     logging.debug("Checking puzzle validity.")
-    flattened_puzzle = flatten_nested_list(puzzle.currentState)
+    flattened_puzzle = flatten_nested_list(puzzle.current_state)
 
     try:
         check_puzzle_unicity(flattened_puzzle)

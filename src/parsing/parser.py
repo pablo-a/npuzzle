@@ -53,7 +53,7 @@ def parse_input() -> PuzzleState:
         elif puzzle.size and line_is_puzzle_content(line, puzzle.size):
             row = get_puzzle_row(puzzle.size, line)
             rows.append(row)
-    puzzle.currentState = rows
+    puzzle.current_state = rows
     return puzzle
 
 

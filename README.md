@@ -10,7 +10,7 @@ This project written in Python aims to solve N-puzzle games using the A\* search
 
 ### Pre requisites
 
-- Python 3.8
+- Python 3.6
 
 ### Usage
 

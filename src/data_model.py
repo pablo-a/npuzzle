@@ -1,39 +1,52 @@
 import logging
 import copy
-from dataclasses import dataclass
 from typing import List, Any, Dict
 from util import generate_snail_positions, flatten_nested_list, colors
 
 
-@dataclass
 class PuzzleSolution:
     "contains the finished state and a map to get locations of each digits."
-    state: List[List[int]]
-    positions: Dict
+
+    def __init__(self, state: List[List[int]], positions: Dict) -> None:
+        self.state = state
+        self.positions = positions
 
 
-@dataclass
 class ParsingError(Exception):
-    message: str
+    def __init__(self, message: str) -> None:
+        self.message = message
 
 
-# Dataclass decorator implements for me magic methods (__init__ , __eq__ , ....)
-@dataclass(order=True)
 class PuzzleState:
-    overall_cost: int
-    moveNumber: int
-    heuristicCost: int
-    size: int
-    currentState: List[List[int]]
-    previous_state: Any
+    def __init__(
+        self,
+        overall_cost: int,
+        move_number: int,
+        heuristic_cost: int,
+        size: int,
+        current_state: List[List[int]],
+        previous_state: Any,
+    ) -> None:
+        self.overall_cost = overall_cost
+        self.move_number = move_number
+        self.heuristic_cost = heuristic_cost
+        self.size = size
+        self.current_state = current_state
+        self.previous_state = previous_state
+
+    def __eq__(self, o: object) -> bool:
+        return self.overall_cost == o.overall_cost
+
+    def __lt__(self, o: object) -> bool:
+        return self.overall_cost < o.overall_cost
 
     def hash(self):
-        to_str = [str(x) for x in flatten_nested_list(self.currentState)]
+        to_str = [str(x) for x in flatten_nested_list(self.current_state)]
         joined = "".join(to_str)
         return int(joined)
 
     def is_final_state(self, solution):
-        return self.currentState == solution
+        return self.current_state == solution
 
     def expand(self):
         "generates possible transitions from a given state"
@@ -41,22 +54,22 @@ class PuzzleState:
         for child in generate_permutations(self):
             # child.display()
             child.previous_state = self
-            child.moveNumber = self.moveNumber + 1
+            child.move_number = self.move_number + 1
             child.size = self.size
             yield child
 
     def compute_cost(self, solution, heuristic, search_type):
         "Take a heuristic function as param to compute cost."
         if search_type == "A*":
-            self.heuristicCost = heuristic(self, solution)
-            self.overall_cost = self.heuristicCost + self.moveNumber
+            self.heuristic_cost = heuristic(self, solution)
+            self.overall_cost = self.heuristic_cost + self.move_number
         # Greedy only uses heuristic
         elif search_type == "greedy":
-            self.heuristicCost = heuristic(self, solution)
-            self.overall_cost = self.heuristicCost
+            self.heuristic_cost = heuristic(self, solution)
+            self.overall_cost = self.heuristic_cost
         # uniform cost is Breadth First Search algo.
         elif search_type == "uniform":
-            self.overall_cost = self.moveNumber
+            self.overall_cost = self.move_number
 
     def display_solution(self, stats):
         self.display_move_number()
@@ -65,7 +78,7 @@ class PuzzleState:
 
     def display_move_number(self):
         print("\n\t\t SOLUTION :\n")
-        print(f"Number of moves to solve the puzzle : {self.moveNumber}\n")
+        print(f"Number of moves to solve the puzzle : {self.move_number}\n")
 
     def display_path(self):
         "recursively print path to solve puzzle"
@@ -83,7 +96,7 @@ class PuzzleState:
     def display(self):
         "display current state of puzzle on screen"
         width = self.size // 2
-        for elem in self.currentState:
+        for elem in self.current_state:
             print("[", end="")
             for item in elem[:-1]:
                 if item == 0:
@@ -106,11 +119,11 @@ class PuzzleState:
 
 def generate_permutations(puzzle):
     for (empty_tile_pos, swap_tile_pos) in get_allowed_permutations(
-        puzzle.currentState
+        puzzle.current_state
     ):
         logging.debug(f"empty position : {empty_tile_pos}")
         logging.debug(f"tile to switch position : {swap_tile_pos}")
-        new_puzzle = permute_puzzle(puzzle.currentState, empty_tile_pos, swap_tile_pos)
+        new_puzzle = permute_puzzle(puzzle.current_state, empty_tile_pos, swap_tile_pos)
         yield new_puzzle
 
 
@@ -136,10 +149,10 @@ def get_empty_position(puzzle):
 def permute_puzzle(puzzle, empty_tile_pos, swap_tile_pos):
     puzzle_copy = copy.deepcopy(puzzle)
     new = PuzzleState(0, 0, 0, 0, puzzle_copy, 0)
-    new.currentState[empty_tile_pos[0]][empty_tile_pos[1]] = new.currentState[
+    new.current_state[empty_tile_pos[0]][empty_tile_pos[1]] = new.current_state[
         swap_tile_pos[0]
     ][swap_tile_pos[1]]
-    new.currentState[swap_tile_pos[0]][swap_tile_pos[1]] = 0
+    new.current_state[swap_tile_pos[0]][swap_tile_pos[1]] = 0
     return new
 
 

@@ -7,7 +7,7 @@ def manhattan_heuristic(puzzle, solution):
     cost = 0
     for row in range(puzzle.size):
         for column in range(puzzle.size):
-            digit = puzzle.currentState[row][column]
+            digit = puzzle.current_state[row][column]
             if digit == 0:
                 continue
             (expected_row, expected_column) = solution.positions[digit]
@@ -24,7 +24,7 @@ def euclidean_heuristic(puzzle, solution):
     cost = 0
     for row in range(puzzle.size):
         for column in range(puzzle.size):
-            digit = puzzle.currentState[row][column]
+            digit = puzzle.current_state[row][column]
             if digit == 0:
                 continue
             (expected_row, expected_column) = solution.positions[digit]
@@ -41,9 +41,9 @@ def hamming_heuristic(puzzle, solution):
     cost = 0
     for y in range(puzzle.size):
         for x in range(puzzle.size):
-            if puzzle.currentState[y][x] == 0:
+            if puzzle.current_state[y][x] == 0:
                 continue
-            digit = puzzle.currentState[y][x]
+            digit = puzzle.current_state[y][x]
             if digit != solution.state[y][x]:
                 cost += 1
     return cost
